@@ -12,6 +12,7 @@ class Users(UserMixin, db.Model):
     email = db.Column(db.String(64), unique=True)
     password = db.Column(db.String(64))
     name = db.Column(db.String(64))
+    collection = db.relationship('Movies', secondary='collection')
 
 class Movies(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -24,3 +25,8 @@ class Movies(db.Model):
     # imdbRating = db.Column(db.String(64))
     # imdbID = db.Column(db.String(64))
     # type = db.Column(db.String(64))
+
+collection = db.Table('collection', db.Model.metadata,
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+    db.Column('movie_id', db.Integer, db.ForeignKey('movies.id'))
+)

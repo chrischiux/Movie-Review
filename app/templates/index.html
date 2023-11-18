@@ -1,10 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
 
-{{ name }}
+<script src="{{ url_for('static', filename='collection.js') }}"></script>
 
+{{ name }}<br>
+<div class="row">
 {% for entry in movies %}
-    <p>{{ entry.title }}</p>
+    <div class="card">
+        <div class="card-body">
+            <img src="/static/{{ entry.poster }}" alt="{{ entry.title }}">
+            <h5 class="card-title">{{ entry.title }}</h5>
+            <p class="card-text">{{ entry.year }}</p>
+            <button class="btn btn-primary collection" data-movie_id="{{entry.id}}" data-action="add">Add to colection</a>
+            <button class="btn btn-primary collection" data-movie_id="{{entry.id}}" data-action="remove">remove colection</a>
+        </div>
+    </div>
 {% endfor %}
+</div>
+
+<a id="confused">Confused.</a><br/>
+
+<p id="response"></p>
 
 {% endblock %}
