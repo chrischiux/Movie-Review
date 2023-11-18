@@ -22,6 +22,7 @@ class Movies(db.Model):
     # actors = db.Column(db.String(64))
     # plot = db.Column(db.String(64))
     poster = db.Column(db.String(64))
+    liked_users = db.relationship('Users', secondary='collection', overlaps='collection')
     # imdbRating = db.Column(db.String(64))
     # imdbID = db.Column(db.String(64))
     # type = db.Column(db.String(64))

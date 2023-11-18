@@ -19,6 +19,7 @@ def index():
 def moviePage(id):
     movie_details = Movies.query.filter_by(id=id).first()
 
+
     return render_template('movie.html', movie=movie_details)
 
 @app.route('/manage-collection', methods=['POST'])
@@ -36,7 +37,7 @@ def collection():
         except(ValueError):
             pass
 
-    return json.dumps({'status': 'OK'})
+    return json.dumps({'new_like_count': len(movie.liked_users)})
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

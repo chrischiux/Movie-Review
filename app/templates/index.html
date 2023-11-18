@@ -11,8 +11,10 @@
             <img src="/static/{{ entry.poster }}" alt="{{ entry.title }}">
             <h5 class="card-title">{{ entry.title }}</h5>
             <p class="card-text">{{ entry.year }}</p>
-            <button class="btn btn-primary collection" data-movie_id="{{entry.id}}" data-action="add">Add to colection</a>
-            <button class="btn btn-primary collection" data-movie_id="{{entry.id}}" data-action="remove">remove colection</a>
+            <a class="like" data-action="add" data-movie_id="{{entry.id}}" aria-label="Add movie to collection" tabindex="1">
+                <i class="fa-regular fa-heart" ></i>
+                <p class="card-text">{{ entry.liked_users|length }}</p>
+            </a>
         </div>
     </div>
 {% endfor %}
