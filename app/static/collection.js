@@ -17,7 +17,7 @@ $(document).ready(function() {
     
 
     $.ajax({
-        url: '/collection',
+        url: '/manage-collection',
         type: 'POST',
         data: JSON.stringify({
             movie_id: movie_id,
@@ -26,7 +26,7 @@ $(document).ready(function() {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function(json) {
-            alert("DONE");
+            //alert("DONE");
         }
         ,
         error: function(xhr, errmsg, err) {

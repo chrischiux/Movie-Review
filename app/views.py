@@ -21,19 +21,7 @@ def moviePage(id):
 
     return render_template('movie.html', movie=movie_details)
 
-
-
-@app.route('/respond', methods=['POST'])
-def respond():
-	data = json.loads(request.data)
-	response = data.get('response')
-
-	# Process the response
-	return json.dumps({'status': 'OK', 'response': response})
-
-
-
-@app.route('/collection', methods=['POST'])
+@app.route('/manage-collection', methods=['POST'])
 def collection():
     data = json.loads(request.data)
     movie_id = int(data.get('movie_id'))
@@ -42,8 +30,11 @@ def collection():
         current_user.collection.append(movie)
         db.session.commit()
     else:
-        current_user.collection.remove(movie)
-        db.session.commit()
+        try:
+            current_user.collection.remove(movie)
+            db.session.commit()
+        except(ValueError):
+            pass
 
     return json.dumps({'status': 'OK'})
 
