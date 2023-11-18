@@ -3,4 +3,8 @@
 
 {{ name }}
 
+{% for entry in movies %}
+    <p>{{ entry.title }}</p>
+{% endfor %}
+
 {% endblock %}

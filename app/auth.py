@@ -13,3 +13,4 @@ def loader_user(user_id):
 @login_manager.unauthorized_handler
 def unauthorized():
     return redirect(url_for('login'))
+

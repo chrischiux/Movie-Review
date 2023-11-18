@@ -1,7 +1,7 @@
 import sqlite3
 from flask import render_template, flash, redirect, url_for
 from app import app, db
-from sqlalchemy import func, exc
+from sqlalchemy import desc
 from .forms import *
 from .models import *
 from flask_login import current_user, login_user, logout_user, login_required, UserMixin
@@ -11,7 +11,9 @@ import hashlib
 @login_required
 def index():
 
-    return render_template('index.html', name=current_user.name)
+    movie_list = Movies.query.order_by(desc(Movies.year)).all()
+
+    return render_template('index.html', name=current_user.name, movies=movie_list)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
