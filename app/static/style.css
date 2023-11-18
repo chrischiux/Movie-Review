@@ -1,0 +1,35 @@
+h1 {
+  font-size: 1.5rem;
+}
+
+.card {
+  width: 20rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  display: inline-block;
+}
+
+.btn {
+  margin-right: 1rem;
+}
+
+.body {
+  margin: 1rem;
+  
+}
+
+.form-control {
+  max-width: 20rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.alert {
+  margin-top: 1rem;
+}
+
+.nav-link {
+  color: white;
+}
