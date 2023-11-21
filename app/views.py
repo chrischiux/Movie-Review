@@ -14,7 +14,15 @@ def index():
 
     movie_list = Movies.query.order_by(desc(Movies.year)).all()
 
-    return render_template('index.html', name=current_user.name, movies=movie_list)
+    return render_template('index.html', movies=movie_list, title='Home')
+
+@app.route('/liked')
+@login_required
+def index():
+
+    movie_list = Users.query.filter_by(id=current_user.id).first().collection
+
+    return render_template('index.html', name=current_user.name, movies=movie_list, title='My liked movies')
 
 @app.route('/movie/<int:id>', methods=['GET', 'POST'])
 def moviePage(id):
@@ -33,7 +41,7 @@ def moviePage(id):
             db.session.rollback()
             flash('You have already reviewed this movie.')
 
-    return render_template('movie.html', movie=movie_details, form=form, reviews=movie_reviews)
+    return render_template('movie.html', movie=movie_details, form=form, reviews=movie_reviews, title=movie_details.title)
 
 @app.route('/manage-collection', methods=['POST'])
 def collection():
@@ -66,5 +74,5 @@ def login():
         else:
             flash(password_hash)
 
-    return render_template('login.html', form=loginForm)
+    return render_template('login.html', form=loginForm, title='Login')
 
