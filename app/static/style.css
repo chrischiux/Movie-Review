@@ -42,3 +42,16 @@ h1 {
 .nav-link {
   color: white;
 }
+
+.like {
+  text-decoration: none;
+}
+
+.like i{
+  color: red;
+}
+
+.like p{
+  display: inline-block;
+  color: black;
+}

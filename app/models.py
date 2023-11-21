@@ -1,11 +1,18 @@
 from app import db
 from flask_login import UserMixin
+from sqlalchemy import UniqueConstraint
 
-movieRatings = db.Table('movieRatings', db.Model.metadata,
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
-    db.Column('movie_id', db.Integer, db.ForeignKey('movies.id')),
-    db.Column('rating', db.Integer)
-)
+class Reviews(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    movie_id = db.Column(db.Integer, db.ForeignKey('movies.id'))
+
+    user = db.relationship('Users', backref=db.backref('reviews', lazy='dynamic'))
+    movie = db.relationship('Movies', backref=db.backref('reviews', lazy='dynamic'))
+
+    __table_args__ = (UniqueConstraint('user_id', 'movie_id', name='_user_movie_uc'),)
+
 
 class Users(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -18,14 +25,7 @@ class Movies(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(64))
     year = db.Column(db.String(64))
-    # director = db.Column(db.String(64))
-    # actors = db.Column(db.String(64))
-    # plot = db.Column(db.String(64))
-    poster = db.Column(db.String(64))
     liked_users = db.relationship('Users', secondary='collection', overlaps='collection')
-    # imdbRating = db.Column(db.String(64))
-    # imdbID = db.Column(db.String(64))
-    # type = db.Column(db.String(64))
 
 collection = db.Table('collection', db.Model.metadata,
     db.Column('user_id', db.Integer, db.ForeignKey('users.id')),

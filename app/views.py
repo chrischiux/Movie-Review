@@ -2,6 +2,7 @@ import sqlite3
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
 from sqlalchemy import desc
+from sqlalchemy.exc import IntegrityError
 from .forms import *
 from .models import *
 from flask_login import current_user, login_user, logout_user, login_required, UserMixin
@@ -17,10 +18,22 @@ def index():
 
 @app.route('/movie/<int:id>', methods=['GET', 'POST'])
 def moviePage(id):
+    form = ReviewForm()
+
     movie_details = Movies.query.filter_by(id=id).first()
+    movie_reviews = movie_details.reviews.all()
 
+    if form.validate_on_submit():
+        
+        try:
+            review = Reviews(content=form.content.data, user_id=current_user.id, movie_id=id)
+            db.session.add(review)
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            flash('You have already reviewed this movie.')
 
-    return render_template('movie.html', movie=movie_details)
+    return render_template('movie.html', movie=movie_details, form=form, reviews=movie_reviews)
 
 @app.route('/manage-collection', methods=['POST'])
 def collection():

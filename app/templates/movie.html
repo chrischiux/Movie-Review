@@ -1,7 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
 
-{{ movie.title }}<br>
-{{ movie.year }}<br>
+<div id="details">
+<h1>{{ movie.title }}</h1>
+{{ movie.year }}
+</div>
+
+<form action="" method="post" name="review_form">
+    {{ form.csrf_token }}
+    {{ form.hidden_tag() }}
+
+    <div class="form-group">
+        <label for="review">What did you think of this movie?</label>
+        {{ form.content(class="form-control") }}
+        <small class="form-text text-muted">Reviews are limited to 500 characters</small>
+    </div>
+
+    <input type="submit" class="btn btn-primary" value="Submit">
+</form>
+
+{% for entry in reviews %}
+    {{ entry.user.name }}<br>
+    {{ entry.content }}<br>
+{% endfor %}
 
 {% endblock %}

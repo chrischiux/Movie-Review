@@ -8,19 +8,19 @@
 {% for entry in movies %}
     <div class="card">
         <div class="card-body">
-            <img src="/static/{{ entry.poster }}" alt="{{ entry.title }}">
+            <!-- <img src="/static/{{ entry.poster }}" alt="{{ entry.title }}"> -->
             <h5 class="card-title">{{ entry.title }}</h5>
             <p class="card-text">{{ entry.year }}</p>
             <a class="like" data-action="add" data-movie_id="{{entry.id}}" aria-label="Add movie to collection" tabindex="1">
                 <i class="fa-regular fa-heart" ></i>
                 <p class="card-text">{{ entry.liked_users|length }}</p>
-            </a>
+            </a><br>
+            <a href="/movie/{{entry.id}}" class= "btn btn-primary"type="button">See Reviews</a>
         </div>
     </div>
 {% endfor %}
 </div>
 
-<a id="confused">Confused.</a><br/>
 
 <p id="response"></p>
 
