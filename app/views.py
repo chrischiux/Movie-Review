@@ -38,7 +38,7 @@ def index():
 
     movie_list = Movies.query.order_by(desc(Movies.year)).all()
 
-    return render_template('index.html', movies=movie_list, title='Home', table_caption='List of all movies', user=current_user)
+    return render_template('index.html', movies=movie_list, title='Home', route='home', user=current_user)
 
 
 @app.route('/liked')

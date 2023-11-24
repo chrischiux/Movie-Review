@@ -4,9 +4,18 @@
 <script src="{{ url_for('static', filename='like_button.js') }}"></script>
 
 <section>
+    {% if route == "home" %}
+    <h1>Home</h1>
+    {% else %}
+    <h1>Liked movies</h1>
+    {% endif %}
 <div class="table-responsive">
     <table class="table table-striped table-responsive">
-        <caption>{{table_caption}}</caption>
+        {% if route == "home" %}
+        <caption>List of all movies</caption>
+        {% else %}
+        <caption>List of liked movies</caption>
+        {% endif %}
         <thead>
             <tr>
             <th scope="col">Movie</th>
