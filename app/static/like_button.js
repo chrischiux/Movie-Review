@@ -10,6 +10,8 @@ $(document).ready(function() {
 //            }
 //        }
 //    });
+
+    
    
    $("a.like").on("click", function() {
     var self = $(this);
@@ -49,3 +51,10 @@ $(document).ready(function() {
    });
    
 });
+
+document.onkeydown = (pressed) => {
+    // The Enter/Return key
+    if (pressed.key === "Enter") {
+      document.activeElement.click();
+    }
+};

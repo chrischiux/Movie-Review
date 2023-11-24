@@ -1,24 +1,57 @@
-<form action="" method="post" name="transaction_form">
-    {{ form.csrf_token }}
-    <div class="form-group">
-        <label for="name">Email: </label>
-        {{ form.email(class="form-control") }}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    {% if title %}
+    <title>{{ title }}</title>
+    {% else %}
+    <title> No title specified</title>
+    {% endif %}
+
+    <meta charset="UTF-8">
+    <meta name="author" content="Chris Chiu">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body>
+    <div id="login">
+        <h1>Login</h1>
+        <form action="" method="post" name="login_form">
+            {{ form.csrf_token }}
+            <div class="form-group">
+                <label for="email">Email: </label>
+                {{ form.email(class="form-control") }}
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password: </label>
+                {{ form.password(class="form-control") }}
+            </div>
+
+            <input type="submit" class="btn btn-primary" value="Submit">
+        </form>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
     </div>
 
-    <div class="form-group">
-        <label for="amount">Password: </label>
-        {{ form.password(class="form-control") }}
-    </div>
+</body>
 
-    <input type="submit" class="btn btn-primary" value="Submit">
-</form>
-
-{% with messages = get_flashed_messages(with_categories=true) %}
-{% if messages %}
-{% for category, message in messages %}
-<div class="alert alert-{{ category }}" role="alert">
-    {{ message }}
-</div>
-{% endfor %}
-{% endif %}
-{% endwith %}
+</html>

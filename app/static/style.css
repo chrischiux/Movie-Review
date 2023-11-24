@@ -2,29 +2,12 @@ h1 {
   font-size: 1.5rem;
 }
 
-.row {
-  height: 50;
+h3 {
+  font-size: 1.2rem;
 }
 
-.card {
-  width: fit-content;
-  height: inherit;
-  margin-right: 1rem;
-  margin-bottom: 1rem;
-  display: inline-block;
-}
-
-.card img {
-  max-width: 20rem;
-}
-
-.btn {
-  margin-right: 1rem;
-}
-
-.body {
+section {
   margin: 1rem;
-  
 }
 
 .form-control {
@@ -37,6 +20,7 @@ h1 {
 
 .alert {
   margin-top: 1rem;
+  max-width: fit-content;
 }
 
 .nav-link {
@@ -54,4 +38,12 @@ h1 {
 .like p{
   display: inline-block;
   color: black;
+}
+
+#login {
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

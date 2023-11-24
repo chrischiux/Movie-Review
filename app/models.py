@@ -21,6 +21,10 @@ class Users(UserMixin, db.Model):
     name = db.Column(db.String(64))
     collection = db.relationship('Movies', secondary='collection')
 
+    def has_liked_movie(self, movie):
+        return movie in self.collection
+
+
 class Movies(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(64))

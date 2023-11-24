@@ -1,26 +1,45 @@
 {% extends "base.html" %}
 {% block content %}
 
-<script src="{{ url_for('static', filename='collection.js') }}"></script>
+<script src="{{ url_for('static', filename='like_button.js') }}"></script>
 
-<div class="row">
-{% for entry in movies %}
-    <div class="card">
-        <div class="card-body">
-            <!-- <img src="/static/{{ entry.poster }}" alt="{{ entry.title }}"> -->
-            <h5 class="card-title">{{ entry.title }}</h5>
-            <p class="card-text">{{ entry.year }}</p>
-            <a class="like" data-action="add" data-movie_id="{{entry.id}}" aria-label="Add movie to collection" tabindex="1">
-                <i class="fa-regular fa-heart" ></i>
-                <p class="card-text">{{ entry.liked_users|length }}</p>
-            </a><br>
-            <a href="/movie/{{entry.id}}" class= "btn btn-primary"type="button">See Reviews</a>
-        </div>
-    </div>
-{% endfor %}
+<section>
+<div class="table-responsive">
+    <table class="table table-striped table-responsive">
+        <caption>{{table_caption}}</caption>
+        <thead>
+            <tr>
+            <th scope="col">Movie</th>
+            <th scope="col">Release Year</th>
+            <th scope="col">Like Count</th>
+            <th scope="col">Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in movies %}
+            <tr>
+                <td>{{ entry.title }}</td>
+                <td>{{ entry.year }}</td>
+                <td>
+                    {% if current_user.has_liked_movie(entry) %}
+                    <a class="like" data-action="remove" data-movie_id="{{entry.id}}" aria-label="Add movie to collection" tabindex="1">
+                        <i class="fa-solid fa-heart" ></i>
+                        <p class="card-text">{{ entry.liked_users|length }}</p>
+                    </a>
+                    {% else %}
+                    <a class="like" data-action="add" data-movie_id="{{entry.id}}" aria-label="Add movie to collection" tabindex="1">
+                        <i class="fa-regular fa-heart" ></i>
+                        <p class="card-text">{{ entry.liked_users|length }}</p>
+                    </a>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="/movie/{{entry.id}}" class= "btn btn-primary"type="button">See Reviews</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
-
-
-<p id="response"></p>
-
+</section>
 {% endblock %}
