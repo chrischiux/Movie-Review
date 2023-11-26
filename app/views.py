@@ -19,7 +19,7 @@ def login():
             login_user(user)
             return redirect(url_for('index'))
         else:
-            flash(password_hash)
+            flash("Invalid email or password.", 'danger')
 
     return render_template('login.html', form=loginForm, title='Login')
 
@@ -38,7 +38,7 @@ def index():
 
     movie_list = Movies.query.order_by(desc(Movies.year)).all()
 
-    return render_template('index.html', movies=movie_list, title='Home', route='home', user=current_user)
+    return render_template('list_view.html', movies=movie_list, title='Home', route='home', user=current_user)
 
 
 @app.route('/liked')
@@ -47,7 +47,7 @@ def liked():
 
     movie_list = Users.query.filter_by(id=current_user.id).first().collection
 
-    return render_template('index.html', name=current_user.name, movies=movie_list, title='My liked movies', table_caption='List of liked movies')
+    return render_template('list_view.html', name=current_user.name, movies=movie_list, title='My liked movies', table_caption='List of liked movies')
 
 @app.route('/movie/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -63,11 +63,27 @@ def moviePage(id):
             review = Reviews(content=form.content.data, user_id=current_user.id, movie_id=id)
             db.session.add(review)
             db.session.commit()
+            flash('Review added successfully.', 'success')
+            return redirect(url_for('moviePage', id=id))
         except IntegrityError:
             db.session.rollback()
             flash('You have already reviewed this movie.', 'danger')
 
     return render_template('movie.html', movie=movie_details, form=form, reviews=movie_reviews, title=movie_details.title)
+
+@app.route('/delete_review/<int:review_id>', methods=['GET', 'POST'])
+@login_required
+def deleteReview(review_id):
+    review = Reviews.query.filter_by(id=review_id).first()
+    movie_id = review.movie_id
+    if review.user_id != current_user.id:
+        flash('You cannot delete reviews that are not yours.', 'danger')
+        return redirect(url_for('moviePage', id=movie_id))
+    db.session.delete(review)
+    db.session.commit()
+    flash('Review deleted successfully.', 'success')
+
+    return redirect(url_for('moviePage', id=movie_id))
 
 @app.route('/manage-collection', methods=['POST'])
 @login_required

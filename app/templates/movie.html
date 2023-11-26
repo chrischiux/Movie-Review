@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-<section>
+<div id="movie_details" class="content">
     <h1>{{ movie.title }}</h1>
     <h3>Release Year: {{ movie.year }}</h2>
-</section>
+    </div>
 
-<section>
+<div id="write_review" class="content">
     <h1>Write A Review!</h1>
     <form action="" method="post" name="review_form">
         {{ form.csrf_token }}
@@ -13,7 +13,7 @@
 
         <div class="form-group">
             <label for="content">What did you think of this movie?</label>
-            {{ form.content(class="form-control") }}
+            {{ form.content(class="form-control",  rows="5") }}
             <small class="form-text">Reviews are limited to 500 characters</small>
         </div>
 
@@ -30,18 +30,37 @@
     {% endif %}
     {% endwith %}
 
-</section>
+</div>
 
-<section>
+<div id="user_reviews" class="content">
     <h1>User Reviews</h1>
     {% for entry in reviews %}
+    {% if current_user.id == entry.user.id %}
     <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{{ entry.user.name }}</h3>
+        </div>
         <div class="card-body">
-            <h5 class="card-title">{{ entry.user.name }}</h5>
+            <p class="card-text">{{ entry.content }}</p>
+            <a href="/delete_review/{{entry.id}}" class= "btn btn-primary"type="button">Delete Review</a>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+    
+
+    {% for entry in reviews %}
+    {% if current_user.id != entry.user.id %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{{ entry.user.name }}</h3>
+        </div>
+        <div class="card-body">
             <p class="card-text">{{ entry.content }}</p>
         </div>
     </div>
+    {% endif %}
     {% endfor %}
-</section>
+</div>
 
 {% endblock %}

@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import HiddenField, TextAreaField, EmailField, PasswordField
-from wtforms.validators import InputRequired, Length, NumberRange, Optional
+from wtforms.validators import InputRequired, Length, Optional
 
 
 class ReviewForm(FlaskForm):

@@ -2,6 +2,10 @@ h1 {
   font-size: 1.5rem;
 }
 
+h2 {
+  font-size: 1.3rem;
+}
+
 h3 {
   font-size: 1.2rem;
 }
@@ -10,8 +14,12 @@ section {
   margin: 1rem;
 }
 
+.content {
+  margin: 1rem;
+}
+
 .form-control {
-  max-width: 20rem;
+  max-width: 30rem;
 }
 
 .form-group {
@@ -38,6 +46,11 @@ section {
 .like p{
   display: inline-block;
   color: black;
+}
+
+.card {
+  max-width: 30rem;
+  margin-bottom: 1rem;
 }
 
 #login {

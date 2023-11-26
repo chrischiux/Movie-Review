@@ -31,6 +31,7 @@ class Movies(db.Model):
     year = db.Column(db.String(64))
     liked_users = db.relationship('Users', secondary='collection', overlaps='collection')
 
+
 collection = db.Table('collection', db.Model.metadata,
     db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
     db.Column('movie_id', db.Integer, db.ForeignKey('movies.id'))
