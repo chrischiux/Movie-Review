@@ -6,7 +6,10 @@ from sqlalchemy.exc import IntegrityError
 from .forms import *
 from .models import *
 from flask_login import current_user, login_user, logout_user, login_required, UserMixin
-import hashlib, json, sys
+import hashlib
+import json
+import sys
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -14,7 +17,8 @@ def login():
 
     if loginForm.validate_on_submit():
         user = Users.query.filter_by(email=loginForm.email.data).first()
-        password_hash = hashlib.sha256(loginForm.password.data.encode()).hexdigest()
+        password_hash = hashlib.sha256(
+            loginForm.password.data.encode()).hexdigest()
         if user != None and user.password == password_hash:
             login_user(user)
             return redirect(url_for('index'))
@@ -22,6 +26,7 @@ def login():
             flash("Invalid email or password.", 'danger')
 
     return render_template('login.html', form=loginForm, title='Login')
+
 
 @app.route('/logout')
 @login_required
@@ -49,6 +54,7 @@ def liked():
 
     return render_template('list_view.html', name=current_user.name, movies=movie_list, title='My liked movies', table_caption='List of liked movies')
 
+
 @app.route('/movie/<int:id>', methods=['GET', 'POST'])
 @login_required
 def moviePage(id):
@@ -58,9 +64,10 @@ def moviePage(id):
     movie_reviews = movie_details.reviews.all()
 
     if form.validate_on_submit():
-        
+
         try:
-            review = Reviews(content=form.content.data, user_id=current_user.id, movie_id=id)
+            review = Reviews(content=form.content.data,
+                             user_id=current_user.id, movie_id=id)
             db.session.add(review)
             db.session.commit()
             flash('Review added successfully.', 'success')
@@ -70,6 +77,7 @@ def moviePage(id):
             flash('You have already reviewed this movie.', 'danger')
 
     return render_template('movie.html', movie=movie_details, form=form, reviews=movie_reviews, title=movie_details.title)
+
 
 @app.route('/delete_review/<int:review_id>', methods=['GET', 'POST'])
 @login_required
@@ -85,6 +93,7 @@ def deleteReview(review_id):
 
     return redirect(url_for('moviePage', id=movie_id))
 
+
 @app.route('/manage-collection', methods=['POST'])
 @login_required
 def collection():
@@ -98,10 +107,7 @@ def collection():
         try:
             current_user.collection.remove(movie)
             db.session.commit()
-        except(ValueError):
+        except (ValueError):
             pass
 
     return json.dumps({'new_like_count': len(movie.liked_users)})
-
-
-
