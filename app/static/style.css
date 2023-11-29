@@ -53,10 +53,28 @@ section {
   margin-bottom: 1rem;
 }
 
-#login {
+#auth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+#login, #register {
   margin: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 50%;
+}
+
+@media (max-width: 600px) {
+  #auth {
+    flex-direction: column;
+  }
+
+  #login, #register {
+    width: 100%;
+  }
 }

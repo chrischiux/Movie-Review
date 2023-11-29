@@ -27,6 +27,24 @@ def login():
 
     return render_template('login.html', form=loginForm, title='Login')
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    registerForm = RegisterForm()
+
+    if registerForm.validate_on_submit():
+
+        user = Users(name=registerForm.name.data, email=registerForm.email.data, password=hashlib.sha256(registerForm.password.data.encode()).hexdigest())
+        try:
+            db.session.add(user)
+            db.session.commit()
+            flash('User registered successfully.', 'success')
+            return redirect(url_for('login'))
+        except IntegrityError:
+            db.session.rollback()
+            flash('Email already registered, please use another email!', 'danger')
+
+    return render_template('register.html', form=registerForm, title='Register')
+
 
 @app.route('/logout')
 @login_required

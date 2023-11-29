@@ -2,7 +2,7 @@
 {% block content %}
 <div id="movie_details" class="content">
     <h1>{{ movie.title }}</h1>
-    <h3>Release Year: {{ movie.year }}</h2>
+    <h2>Release Year: {{ movie.year }}</h2>
     </div>
 
 <div id="write_review" class="content">
@@ -38,7 +38,7 @@
     {% if current_user.id == entry.user.id %}
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">{{ entry.user.name }}</h3>
+            <h2 class="card-title">{{ entry.user.name }}</h2>
         </div>
         <div class="card-body">
             <p class="card-text">{{ entry.content }}</p>

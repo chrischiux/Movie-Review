@@ -11,7 +11,9 @@ $(document).ready(function() {
 //        }
 //    });
 
-    
+    $(function() {
+        $("#movie_list").tablesorter();
+    });
    
    $("a.like").on("click", function() {
     var self = $(this);
