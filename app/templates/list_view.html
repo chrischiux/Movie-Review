@@ -33,19 +33,19 @@
                 <td>{{ entry.year }}</td>
                 <td>
                     {% if current_user.has_liked_movie(entry) %}
-                    <a class="like" data-action="remove" data-movie_id="{{entry.id}}" aria-label="Add movie to collection">
-                        <i class="fa-solid fa-heart" tabindex="1"></i>
+                    <a class="like" data-action="remove" data-movie_id="{{entry.id}}" aria-label="Add {{entry.title}} to collection">
+                        <i class="fa-solid fa-heart" tabindex="0"></i>
                         <p class="card-text">{{ entry.liked_users|length }}</p>
                     </a>
                     {% else %}
-                    <a class="like" data-action="add" data-movie_id="{{entry.id}}" aria-label="Add movie to collection">
-                        <i class="fa-regular fa-heart" tabindex="1"></i>
+                    <a class="like" data-action="add" data-movie_id="{{entry.id}}" aria-label="Add {{entry.title}} to collection">
+                        <i class="fa-regular fa-heart" tabindex="0"></i>
                         <p class="card-text">{{ entry.liked_users|length }}</p>
                     </a>
                     {% endif %}
                 </td>
                 <td>
-                    <a href="/movie/{{entry.id}}" class= "btn btn-primary"type="button">See Reviews</a>
+                    <a href="/movie/{{entry.id}}" class= "btn btn-primary" role="button">See Reviews</a>
                 </td>
             </tr>
             {% endfor %}
