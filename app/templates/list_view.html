@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<script src="{{ url_for('static', filename='like_button.js') }}"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 <script src="{{ url_for('static', filename='jquery.tablesorter.min.js') }}"></script>
 
 
@@ -33,13 +33,13 @@
                 <td>{{ entry.year }}</td>
                 <td>
                     {% if current_user.has_liked_movie(entry) %}
-                    <a class="like" data-action="remove" data-movie_id="{{entry.id}}" aria-label="Add {{entry.title}} to collection">
-                        <i class="fa-solid fa-heart" tabindex="0"></i>
+                    <a class="like" data-action="remove" data-movie_id="{{entry.id}}">
+                        <i class="fa-solid fa-heart" tabindex="0" aria-label="Remove from collection" role="button"></i>
                         <p class="card-text">{{ entry.liked_users|length }}</p>
                     </a>
                     {% else %}
-                    <a class="like" data-action="add" data-movie_id="{{entry.id}}" aria-label="Add {{entry.title}} to collection">
-                        <i class="fa-regular fa-heart" tabindex="0"></i>
+                    <a class="like" data-action="add" data-movie_id="{{entry.id}}">
+                        <i class="fa-regular fa-heart" tabindex="0" aria-label="Add to collection" role="button"></i>
                         <p class="card-text">{{ entry.liked_users|length }}</p>
                     </a>
                     {% endif %}
