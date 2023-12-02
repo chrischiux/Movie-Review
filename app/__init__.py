@@ -6,8 +6,12 @@ from flask_wtf.csrf import CSRFProtect
 app = Flask(__name__)
 app.config.from_object('config')
 with app.app_context():
+
+    # setup flask csrf extension
     csrf = CSRFProtect(app)
     csrf.init_app(app)
+
+    # setup sqlalchemy
     db = SQLAlchemy(app)
     migrate = Migrate(app, db, render_as_batch=True)
 

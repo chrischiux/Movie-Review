@@ -39,11 +39,11 @@ section {
   text-decoration: none;
 }
 
-.like i{
+.like i {
   color: red;
 }
 
-.like p{
+.like p {
   display: inline-block;
   color: black;
 }
@@ -60,7 +60,8 @@ section {
   height: 100vh;
 }
 
-#login, #register {
+#login,
+#register {
   margin: 1rem;
   display: flex;
   flex-direction: column;
@@ -74,7 +75,8 @@ section {
     flex-direction: column;
   }
 
-  #login, #register {
+  #login,
+  #register {
     width: 100%;
   }
 }
