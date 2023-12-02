@@ -118,6 +118,7 @@ def collection():
     data = json.loads(request.data)
     movie_id = int(data.get('movie_id'))
     movie = Movies.query.filter_by(id=movie_id).first()
+    
     if data.get('action') == 'add':
         current_user.collection.append(movie)
         db.session.commit()
