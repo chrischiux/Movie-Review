@@ -57,7 +57,7 @@
     {% if current_user.id != entry.user.id %}
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">{{ entry.user.name }}</h3>
+            <h2 class="card-title">{{ entry.user.name }}</h2>
         </div>
         <div class="card-body">
             <p class="card-text">{{ entry.content }}</p>
