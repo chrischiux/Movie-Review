@@ -43,7 +43,7 @@ def register():
         else:
             # create new user instance and try add to database
             user = Users(name=registerForm.name.data, email=registerForm.email.data,
-                        password=hashlib.sha256(registerForm.password.data.encode()).hexdigest())
+                         password=hashlib.sha256(registerForm.password.data.encode()).hexdigest())
             try:
                 db.session.add(user)
                 db.session.commit()
@@ -72,20 +72,25 @@ def index():
     # get list of movies ordered by year
     movie_list = Movies.query.order_by(desc(Movies.year)).all()
 
-    return render_template('grid_view.html', movies=movie_list, title='Home', header='Home')
+    return render_template('grid_view.html', movies=movie_list,
+                           title='Home', header='Home')
+
 
 @app.route('/sort/title')
 def sort_title():
     movies = Movies.query.order_by(Movies.title).all()
 
-    return render_template('grid_view.html', movies=movies, title='Home', header='Moives Sorted By Title')
+    return render_template('grid_view.html', movies=movies,
+                           title='Home', header='Moives Sorted By Title')
+
 
 @app.route('/sort/likes')
 def sort_likes():
     movies = db.session.query(Movies, func.count(Movies.liked_users)).outerjoin(
-    Movies.liked_users).group_by(Movies).order_by(func.count(Movies.liked_users).desc()).all()
+        Movies.liked_users).group_by(Movies).order_by(func.count(Movies.liked_users).desc()).all()
 
-    return render_template('grid_view.html', movies=[movie[0] for movie in movies], title='Home', header='Moives Sorted By Likes')
+    return render_template('grid_view.html', movies=[movie[0] for movie in movies],
+                           title='Home', header='Moives Sorted By Likes')
 
 
 @app.route('/liked')
@@ -95,7 +100,8 @@ def liked():
     # get list of movies liked by current user
     movie_list = Users.query.filter_by(id=current_user.id).first().collection
 
-    return render_template('grid_view.html', name=current_user.name, movies=movie_list, title='My liked movies', header='Movies In Your Collection')
+    return render_template('grid_view.html', name=current_user.name, movies=movie_list,
+                           title='My liked movies', header='Movies In Your Collection')
 
 
 @app.route('/movie/<int:id>', methods=['GET', 'POST'])
@@ -122,7 +128,8 @@ def moviePage(id):
             db.session.rollback()
             flash('You have already reviewed this movie.', 'danger')
 
-    return render_template('movie.html', movie=movie_details, form=form, reviews=movie_reviews, title=movie_details.title)
+    return render_template('movie.html', movie=movie_details, form=form,
+                           reviews=movie_reviews, title=movie_details.title)
 
 
 @app.route('/delete_review/<int:review_id>', methods=['GET', 'POST'])

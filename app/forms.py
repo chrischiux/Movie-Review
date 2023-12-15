@@ -39,6 +39,6 @@ class RegisterForm(FlaskForm):
                                  "Please enter your password."),
                                  Length(min=1, max=64)])
     password_confirm = PasswordField('password_confirm',
-                             validators=[InputRequired(
-                                 "Please re-enter enter your password."),
-                                 Length(min=1, max=64)])
+                                     validators=[InputRequired(
+                                         "Please re-enter enter your password."),
+                                         Length(min=1, max=64)])
