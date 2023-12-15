@@ -7,19 +7,22 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <section>
-    {% if route == "home" %}
-    <h1>Home</h1>
-    {% else %}
-    <h1>Liked movies</h1>
-    {% endif %}
+    <div class="d-flex flex-row flex-wrap mb-3">
+        <h1>{{ header }}</h1>
+        {% if header != "Movies In Your Collection" %}
+        <a href="{{ url_for('sort_title') }}" class="btn btn-primary ms-3 ms-auto" role="button">Sort by Title</a>
+        <a href="{{ url_for('sort_likes') }}" class="btn btn-primary ms-3" role="button">Sort by Likes</a>
+        {% endif %}
+    </div>
+
     <div class="d-flex flex-row flex-wrap">
         {% for entry in movies %}
-            <div class="card mb-3 me-3" style="width: 15rem;">
-                <img src="/static/{{entry.image}}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h2 class="card-title">{{ entry.title }} </h2>
-                    <h3 class="card-title">{{ entry.year }} </h3>
-                    <div class="d-flex justify-content-between">
+        <div class="card mb-3 me-3">
+            <img src="/static/{{entry.image}}" class="card-img-top" alt="{{entry.title}} movie poster">
+            <div class="card-body">
+                <h2 class="card-title">{{ entry.title }} </h2>
+                <h3 class="card-title">{{ entry.year }} </h3>
+                <div class="d-flex justify-content-between">
                     {% if current_user.has_liked_movie(entry) %}
                     <a class="like" data-action="remove" data-movie_id="{{entry.id}}">
                         <i class="fa-solid fa-heart" tabindex="0" aria-label="Remove from collection" role="button"></i>
@@ -31,10 +34,10 @@
                         <p class="card-text">{{ entry.liked_users|length }}</p>
                     </a>
                     {% endif %}
-                    <a href="/movie/{{entry.id}}" class="btn btn-primary float-right" role="button">See Reviews</a>
-                </div>
+                    <a href="/movie/{{entry.id}}" class="btn btn-primary" role="button">See Reviews</a>
                 </div>
             </div>
+        </div>
         {% endfor %}
     </div>
 </section>
