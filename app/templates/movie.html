@@ -45,7 +45,7 @@
             <!-- display current user's reviews first -->
             {% for entry in reviews %}
             {% if current_user.id == entry.user.id %}
-            <div class="card">
+            <div class="card mb-3">
                 <div class="card-header">
                     <h2 class="card-title">{{ entry.user.name }}</h2>
                 </div>
@@ -62,7 +62,7 @@
             <!-- display other user's reviews -->
             {% for entry in reviews %}
             {% if current_user.id != entry.user.id %}
-            <div class="card">
+            <div class="card mb-3">
                 <div class="card-header">
                     <h2 class="card-title">{{ entry.user.name }}</h2>
                 </div>
