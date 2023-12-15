@@ -71,7 +71,7 @@ def index():
     # get list of movies ordered by year
     movie_list = Movies.query.order_by(desc(Movies.year)).all()
 
-    return render_template('grid_view.html', action=movie_list, title='Home', route='home')
+    return render_template('grid_view.html', movies=movie_list, title='Home', route='home')
 
 
 @app.route('/liked')

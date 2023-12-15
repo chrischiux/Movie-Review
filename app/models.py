@@ -33,6 +33,7 @@ class Movies(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(64))
     year = db.Column(db.String(64))
+    image = db.Column(db.String(64))
     liked_users = db.relationship(
         'Users', secondary='collection', overlaps='collection')
 
