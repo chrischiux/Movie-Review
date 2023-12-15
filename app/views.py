@@ -36,17 +36,21 @@ def register():
 
     if registerForm.validate_on_submit():
 
-        # create new user instance and try add to database
-        user = Users(name=registerForm.name.data, email=registerForm.email.data,
-                     password=hashlib.sha256(registerForm.password.data.encode()).hexdigest())
-        try:
-            db.session.add(user)
-            db.session.commit()
-            flash('User registered successfully.', 'success')
-            return redirect(url_for('login'))
-        except IntegrityError:
-            db.session.rollback()
-            flash('Email already registered, please use another email!', 'danger')
+        # check if password and password_confirm match
+        if registerForm.password.data != registerForm.password_confirm.data:
+            flash("Passwords do not match.", 'danger')
+        else:
+            # create new user instance and try add to database
+            user = Users(name=registerForm.name.data, email=registerForm.email.data,
+                        password=hashlib.sha256(registerForm.password.data.encode()).hexdigest())
+            try:
+                db.session.add(user)
+                db.session.commit()
+                flash('User registered successfully.', 'success')
+                return redirect(url_for('login'))
+            except IntegrityError:
+                db.session.rollback()
+                flash('Email already registered, please use another email!', 'danger')
 
     return render_template('register.html', form=registerForm, title='Register')
 
@@ -67,7 +71,7 @@ def index():
     # get list of movies ordered by year
     movie_list = Movies.query.order_by(desc(Movies.year)).all()
 
-    return render_template('list_view.html', movies=movie_list, title='Home', route='home')
+    return render_template('grid_view.html', action=movie_list, title='Home', route='home')
 
 
 @app.route('/liked')

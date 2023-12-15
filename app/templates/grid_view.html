@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+<script src="{{ url_for('static', filename='jquery.tablesorter.min.js') }}"></script>
+
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+<section>
+    {% if route == "home" %}
+    <h1>Home</h1>
+    {% else %}
+    <h1>Liked movies</h1>
+    {% endif %}
+    <div class="row">
+        {% for entry in action %}
+        <div class="card mr-3" style="width: 15rem;">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+                <h2 class="card-title">{{ entry.title }} </h2>
+                <h3 class="card-title">{{ entry.year }} </h3>
+                {% if current_user.has_liked_movie(entry) %}
+                <a class="like" data-action="remove" data-movie_id="{{entry.id}}">
+                    <i class="fa-solid fa-heart" tabindex="0" aria-label="Remove from collection" role="button"></i>
+                    <p class="card-text">{{ entry.liked_users|length }}</p>
+                </a>
+                {% else %}
+                <a class="like" data-action="add" data-movie_id="{{entry.id}}">
+                    <i class="fa-regular fa-heart" tabindex="0" aria-label="Add to collection" role="button"></i>
+                    <p class="card-text">{{ entry.liked_users|length }}</p>
+                </a>
+                {% endif %}
+                <a href="/movie/{{entry.id}}" class="btn btn-primary" role="button">See Reviews</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
